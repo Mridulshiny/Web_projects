@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Spline with Text Overlay</title>
+    <link rel="stylesheet" href="/Style/styles.css">
+
+    <!-- Import Spline Viewer -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            text-align: center;
+            height: 100vh; /* Keeps your scrollable page */
+        }
+
+        header{
+            z-index: 9999;
+        }
+        .navbar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 50px;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0);
+        }
+        
+        .logo img {
+            height: 40px; /* Adjust size as needed */
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links li {
+            display: inline;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #fbc02d; /* Golden yellow hover */
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #fbc02d;
+            color: black;
+        }
+        
+        /* Mobile Menu Icon */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                color: white;
+            }
+        
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: black;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                display: none;
+                padding: 20px 0;
+            }
+            .navbar{
+                padding-right: 3rem;
+                padding-left: 0.5rem;
+                gap: 11rem;
+                justify-content: space-between;
+            }
+        
+            .nav-links.active {
+                display: flex;
+                background-color: #008eff;
+                margin-top: auto;
+            }
+        
+            .nav-links li {
+                display: block;
+            }
+        
+            .btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn{
+                display: none !important;
+                
+            }
+        }
+        .container {
+            top: -74px;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+        spline-viewer {
+            width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+        }
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 18%;
+            transform: translate(-50%, -50%);
+            font-size: 1rem;
+            font-weight: bold;
+            
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        @media (max-width:768px){
+            .container{
+                display: flow;
+                justify-content: center;
+            }
+            spline-viewer{
+                position: absolute;
+        top: 160px;
+        width: 21rem;
+        height: 19rem;
+        left: 26px;
+            }
+            .overlay-text{
+                width: 244px;
+        left: 12rem;
+        top: 33rem;
+            }
+        }
+
+        
+
+        /* styles.css */
+
+        .portfolio-first-section {
+            background-color: black;
+            color: white;
+            padding: 35px 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .portfolio-container {
+            max-width: 1200px;
+            margin: auto;
+            text-align: left;
+        }
+        
+        .portfolio-title {
+            font-size: 44px;
+            text-align: center;
+            padding-top: 2rem;
+            left: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        
+        .portfolio-info {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+            color: gray;
+        }
+        
+        .portfolio-info-item {
+            flex: 1;
+        }
+        
+        .portfolio-info-item span {
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        
+        .portfolio-info-item p {
+            font-size: 20px;
+            margin-top: 5px;
+        }
+        
+        .portfolio-image-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+        }
+        
+        .portfolio-play-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .portfolio-play-button:hover {
+            background: rgba(0, 0, 0, 1);
+        }
+        
+        .portfolio-overview {
+            margin-top: 50px;
+            max-width: 900px;
+        }
+        
+        .portfolio-overview-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .portfolio-overview-text {
+            color: gray;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        /* Image Grid Layout */
+        /*.portfolio-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto auto;
+            gap: 10px;
+            max-width: 900px;
+            margin: auto;
+        }
+        
+        .portfolio-image-item {
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .portfolio-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .portfolio-image-item.large {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+        
+        .portfolio-image-item.small {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-auto-rows: 200px;
+            gap: 10px;
+            grid-auto-flow: dense;
+            max-width: 1200px;
+            margin: auto;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+        
+        .gallery-item.tall {
+            grid-row: span 2;
+        }*/
+        
+        
+        .content-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background-color: #000000;
+        }
+        
+        .content-container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            gap: 30px;
+        }
+        
+        .left-column, .right-column {
+            flex: 1;
+        }
+        
+        .video-placeholder {
+            background-color: #000;
+            position: relative;
+            padding-top: 90.77%; /* Aspect ratio 9:16 (height / width * 100) */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .video-placeholder video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .section-heading {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .section-paragraph {
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        /* Remove all default browser video controls */
+.custom-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none; /* Disable interaction with the video */
+}
+
+/* Optional: Add a custom play button or other controls */
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.play-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+        
+        @media (max-width: 768px) {
+            .content-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+        
+            .section-heading {
+                text-align: center;
+            }
+        
+            .section-paragraph {
+                text-align: center;
+                max-width: 80%;
+            }
+        }
+
+        .speed-section {
+            display: flex;
+            justify-self: center;
+            align-items: center;
+            max-width: 1255px;
+            background: #000000;
+            padding: 20px;
+            gap: 24rem;
+            line-height: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .speed-text-content {
+            flex: 1;
+        }
+        .speed-heading {
+            text-align: left;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .speed-paragraph {
+            text-align: left;
+            font-size: 16px;
+            color: #b0b0b0;
+        }
+        .speed-video-frame {
+            width: 250px; /* Adjust for Instagram Reels aspect ratio */
+            height: 444px; /* 9:16 Aspect Ratio */
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .speed-video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .speed1-section {
+            display: flex;
+            justify-self: center;
+            align-items: center;
+            max-width: 1255px;
+            background: #000000;
+            padding: 20px;
+            gap: 10rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .speed1-text-content {
+            flex: 1;
+        }
+        .speed1-heading {
+            text-align: left;
+
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .speed1-paragraph {
+            text-align: left;
+            font-size: 16px;
+            color: #b0b0b0;
+        }
+        .speed1-video-frame {
+            width: 1202px; /* Adjust for Instagram Reels aspect ratio */
+            height: 444px; /* 9:16 Aspect Ratio */
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .speed1-video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-first-section {
+                padding: 20px;
+            }
+        
+            .portfolio-container {
+                text-align: center;
+            }
+        
+            .portfolio-title {
+                font-size: 32px;
+                text-align: center;
+            }
+        
+            .portfolio-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+        
+            .portfolio-info-item span {
+                font-size: 14px;
+            }
+        
+            .portfolio-info-item p {
+                font-size: 18px;
+            }
+        
+            .portfolio-image-wrapper {
+                border-radius: 8px;
+            }
+        
+            .portfolio-play-button {
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        
+            .portfolio-overview {
+                margin-top: 30px;
+                max-width: 100%;
+                padding: 0 20px;
+            }
+        
+            .portfolio-overview-title {
+                font-size: 28px;
+            }
+        
+            .portfolio-overview-text {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+        
+            .content-section {
+                padding: 20px;
+            }
+        
+            .content-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        
+            .left-column, .right-column {
+                width: 100%;
+            }
+        
+            .video-placeholder {
+                padding-top: 56.25%; /* Adjusted aspect ratio for smaller screens */
+            }
+        
+            .section-heading {
+                font-size: 24px;
+                text-align: center;
+            }
+        
+            .section-paragraph {
+                font-size: 14px;
+                text-align: center;
+                max-width: 100%;
+            }
+        
+            .speed-section {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 20px;
+                text-align: center;
+            }
+        
+            .speed-video-frame {
+                width: 100%;
+                height: auto;
+                max-width: 300px;
+            }
+        
+            .speed-text-content {
+                text-align: center;
+            }
+        
+            .speed-heading {
+                font-size: 20px;
+            }
+        
+            .speed-paragraph {
+                font-size: 14px;
+            }
+        
+            .speed1-section {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 20px;
+                text-align: center;
+            }
+        
+            .speed1-video-frame {
+                width: 100%;
+                height: auto;
+                max-width: 90%;
+            }
+        
+            .speed1-heading {
+                font-size: 20px;
+            }
+        
+            .speed1-paragraph {
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        
+        <div class="logo">
+            <img src= "/Images/LogoVilambaram 1.png">
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/pages/home.html">Home</a></li>
+                <li><a href="/pages/aboutus.html">About Us</a></li>
+                <li><a href="/pages/services.html">Services</a></li>
+                <li><a href="/pages/portfolio.html">Portfolios</a></li>
+                <li><a href="/pages/Contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <a href="/pages/Contact.html" class="btn">Book A Demo</a>
+    </header>
+
+    <!-- <div class="gallery">
+        <div class="item tall"></div>
+        <div class="item wide"></div>
+        <div class="item square"></div>
+        <div class="item tall"></div>
+        <div class="item wide"></div>
+        <div class="item square"></div>
+    </div> -->
+
+    <section class="portfolio-first-section">
+        <div class="portfolio-container">
+            <h2 class="portfolio-title">Cosmetics and Skin Care - Product Photography</h2>
+            
+            <div class="portfolio-overview">
+                <h3 class="portfolio-overview-title">Overview</h3>
+                <p class="portfolio-overview-text">"In 2024, we had the pleasure of collaborating with Truly Yours, a cosmetic and skincare company renowned for offering high-quality products. Our role was to create a stunning product photography setup that highlighted their premium offerings. By meticulously curating the perfect environment and capturing each product from the best angles, we were able to deliver images that truly reflected the brand's dedication to quality. The final results exceeded the client’s expectations, enhancing their product presentations and helping to elevate their brand’s visual identity</p>
+                <!-- <p class="portfolio-overview-text">The Pizza Company Video is a promotional short by Kaleidoscope. It was available on the Pizza Company website from 2023 to now.</p>
+                <p class="portfolio-overview-text">You can watch the new Pizza Company Commercial featuring Craig Robinson for Pizza Company Big Dinner Box. Craig Robinson introduces the Big Dinner Box.</p> -->
+            </div>
+            <div class="portfolio-info">
+                <div class="portfolio-info-item">
+                    <span>Client:</span>
+                    <p>Truly Yours</p>
+                </div>
+                <div class="portfolio-info-item">
+                    <span>Year:</span>
+                    <p>2023</p>
+                </div>
+                <div class="portfolio-info-item">
+                    <span>Services:</span>
+                    <p>Product Photography</p>
+                </div>
+            </div>
+            <div class="portfolio-image-wrapper">
+                <img src="/Images/Portfolioproduct5.jpg.png.jpg" alt="Pizza Company TV Commercial" class="portfolio-image">
+                <!-- <button class="portfolio-play-button">▶ Play Video</button> -->
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="portfolio-first-section">
+        <div class="portfolio-container">
+            
+            <div class="portfolio-image-wrapper">
+                <img src="/Images/Portfolioproduct2 2.png" alt="Pizza Company TV Commercial" class="portfolio-image">
+                <!-- <button class="portfolio-play-button">▶ Play Video</button> -->
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="portfolio-first-section">
+        <div class="portfolio-container">
+            
+            <div class="portfolio-image-wrapper">
+                <img src="/Images/productimg3.png" alt="Pizza Company TV Commercial" class="portfolio-image">
+                <!-- <button class="portfolio-play-button">▶ Play Video</button> -->
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="portfolio-first-section">
+        <div class="portfolio-container">
+            
+            <div class="portfolio-image-wrapper">
+                <img src="/Images/productimg2.png" alt="Pizza Company TV Commercial" class="portfolio-image">
+                <!-- <button class="portfolio-play-button">▶ Play Video</button> -->
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="portfolio-first-section">
+        <div class="portfolio-container">
+            
+            <div class="portfolio-image-wrapper">
+                <img src="/Images/productimg3.png" alt="Pizza Company TV Commercial" class="portfolio-image">
+                <!-- <button class="portfolio-play-button">▶ Play Video</button> -->
+            </div>
+            
+        </div>
+    </section>
+
+    
+
+    <div class="speed1-section">
+        <div class="speed1-video-frame">
+            <video autoplay muted loop playsinline>
+                <source src="/Images/Portfolio video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="spee1-text-content">
+            <h2 class="speed1-heading"><span style="color: red;">PremierKitchen</span></h2>
+            <p class="speed1-paragraph">In 2024, our company had the privilege of collaborating with premierkitchen.in for the creation of a dynamic 26-second Reels video. From concept to execution, we handled every aspect of the production, including shooting and editing the video. The result was a visually engaging piece that not only captured the essence of Premier Kitchen's brand but also significantly boosted their Instagram engagement. The video garnered impressive attention on the platform, elevating the brand's social media presence and connecting with a wider audience.
+            </p>
+        </div>
+    </div>
+    
+
+
+    <!-- <div class="portfolio-image-grid">
+        <div class="portfolio-image-item large">
+            <img src="/Images/collage1.png" alt="People enjoying pizza on the beach">
+        </div>
+        <div class="portfolio-image-item small">
+            <img src="/Images/collage1.png" alt="Delicious pizza with fresh ingredients">
+        </div>
+        <div class="portfolio-image-item large">
+            <img src="/Images/collage2.png" alt="Friends enjoying pizza indoors">
+        </div>
+        <div class="portfolio-image-item large">
+            <img src="/Images/collage2.png" alt="Friends enjoying pizza indoors">
+        </div>
+    </div> -->
+
+    <!-- <div class="gallery">
+        <div class="gallery-item wide"><img src="/Images/collage1.png" alt="Image 1"></div>
+        <div class="gallery-item tall"><img src="/Images/collage2.png" alt="Image 2"></div>
+        <div class="gallery-item"><img src="/Images/collage1.png" alt="Image 3"></div>
+        <div class="gallery-item wide"><img src="/Images/collage1.png" alt="Image 4"></div>
+        <div class="gallery-item"><img src="/Images/collage2.png" alt="Image 5"></div>
+        <div class="gallery-item tall"><img src="/Images/collage1.png" alt="Image 6"></div>
+        <div class="gallery-item"><img src="/Images/collage1.png" alt="Image 7"></div>
+        <div class="gallery-item wide"><img src="/Images/collage1.png" alt="Image 1"></div>
+        <div class="gallery-item tall"><img src="/Images/collage2.png" alt="Image 2"></div>
+        <div class="gallery-item"><img src="/Images/collage1.png" alt="Image 3"></div>
+        <div class="gallery-item wide"><img src="/Images/collage1.png" alt="Image 4"></div>
+        <div class="gallery-item"><img src="/Images/collage2.png" alt="Image 5"></div>
+        <div class="gallery-item tall"><img src="/Images/collage1.png" alt="Image 6"></div>
+        <div class="gallery-item"><img src="/Images/collage1.png" alt="Image 7"></div>
+    </div>
+     -->
+    
+
+    <!-- <div class=" container"> -->
+        <!-- Spline 3D Model -->
+        <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.62/build/spline-viewer.js"></script>
+        <spline-viewer url="https://prod.spline.design/rNkscw094hJl8l68/scene.splinecode"></spline-viewer>
+         -->
+        <!-- Overlay Text -->
+        <!-- <div class="overlay-text">Page Under Construction</div>
+    </div> -->
+
+
+    <div class="speed-section">
+        <div class="speed-text-content">
+            <h2 class="speed-heading"><span style="color: red;">Premier Kitchen Video Collaboration</span></h2>
+            <p class="speed-paragraph">We had the privilege of collaborating with PremierKitchen.in to produce a high-quality 26-second Instagram Reels video that significantly boosted their brand engagement. Our team handled the entire production process, from concept development and scripting to filming and post-production editing. We incorporated professional actors, high-end camera equipment, and advanced VFX (Visual Effects) to enhance the storytelling and create a visually compelling advertisement. The seamless integration of cinematic visuals, smooth transitions, and engaging motion graphics helped the video capture attention, ultimately increasing Premier Kitchen’s reach and impact on Instagram.
+            </p>
+        </div>
+        <div class="speed-video-frame">
+            <video autoplay muted loop playsinline>
+                <source src="/Images/Portfolio video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Left Section -->
+            <div class="footer-left">
+                <img src="/Images/LogoVilambaram 1.png" alt="Kaleidoscope Logo" class="logo">
+                
+                <p class="footer-text">
+                    Kaleidoscope - a creative agency specializing in making videos for strategy, marketing, and production.
+                </p>
+                
+                <!-- Social Media Icons -->
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-vimeo-v"></i></a>
+                </div>
+            </div>
+    
+            <!-- Right Section -->
+            <div class="footer-right">
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="#">Home <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">About Us <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">Portfolios <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">Services <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">Contact Us <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">404 Page <span class="arrow">&#8599;</span></a></li>
+                    </ul>
+                </div>
+    
+                
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>© Copyright 2023 VilambarmMedia. All Rights Reserved</p>
+        <div class="footer-links-bottom">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </div>
+
+</body>
+</html>

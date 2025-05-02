@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Design</title>
+    <link rel="stylesheet" href="/Style/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+<body>
+
+    <header class="navbar">
+        
+        <div class="logo">
+            <img src= "/Images/LogoVilambaram 1.png">
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/pages/home.html">Home</a></li>
+                <li><a href="/pages/aboutus.html">About Us</a></li>
+                <li><a href="/pages/services.html">Services</a></li>
+                <li><a href="/pages/portfolio.html">Portfolios</a></li>
+                <li><a href="/pages/Contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="btn">Book A Demo</a>
+    </header>
+    <section class="hero">
+        <!-- nothing to say -->
+        <head>
+            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+        </head>
+        
+        <div class="hero-content">
+            <h1>Creative & Corporate <br><span>Video Production</span></h1>
+        </div>
+
+        <div class="video-container">
+            <video id="hero-video" poster="thumbnail.jpg" autoplay loop muted>
+                <source src="/Images/SPR Final 2.mp4" type="video/mp4" autoplay loop muted>
+                Your browser does not support the video tag.
+            </video>
+            
+
+            <div class="contact-wrapper">
+                <div class="contact-btn">
+                    <img src="/Images/arrow.png" alt="">
+                    
+                    <!-- Circular Rotating Text -->
+                    <svg class="svg-text" viewBox="0 0 100 100">
+                        <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none"/>
+                        <text>
+                            <textPath xlink:href="#circlePath" startOffset="50%" text-anchor="middle" font-size="6" letter-spacing="1.9">
+                                ✶ CONTACT US   ✶   CONTACT US   ✶   CONTACT US
+                            </textPath>
+                        </text>
+                    </svg>
+            
+                </div>
+            </div>
+            
+            
+            
+        </div>
+  
+        
+
+        <p class="footer-text">More than 1 million people across 200+ companies choose Vilambaram</p>
+    </section>
+
+    <!-- Marquee Logo Section with Fading Effect -->
+    <div class="marquee-container">
+        <div class="marquee">
+            <div class="marquee-content">
+                <img src="/Images/marqueeimg.png" alt="Logo">
+                <img src="/Images/Homme.png" alt="Logo 2">
+                <img src="/Images/Matsuri.png" alt="Logo 3">
+                <img src="/Images/WeiboTV.png" alt="Logo 4">
+                <img src="/Images/Hebara.png" alt="Logo 5">
+                <img src="/Images/Radical.png" alt="Logo 6">
+            </div>
+        </div>
+    </div>
+
+    <section class="second-heading">
+        <div class="content-wrapper">
+            <!-- Left Static Content -->
+            <div class="text-content">
+                <h3>Here's</h3>
+                <h1>WHAT <span class="highlight">WE </span> DO</h1>
+                <p>
+                    lies in crafting strategic brand solutions that drive engagement and growth. From media management and....... 
+                </p>
+                
+                
+                <a href="services.html" class="learn-more">Explore our Services<span>↗</span></a>
+            </div>
+
+            <!-- Right Stacking Cards -->
+            <div class="right-content">
+                <ul class="cards">
+                    <li class="card1" id="card1">
+                        <h2>We understand requirements of a brand  </h2>
+                        <p>and help them reach
+                            their TG through right and innovative ways.</p>
+                    </li>
+                    <li class="card2" id="card2">
+                        <h2>We tailor the apt and appropriate methods </h2>
+                        <p>for the best brand
+                            reach, awareness and create a TG community.</p>
+                    </li>
+                    <li class="card3" id="card3">
+                        <h2>We create IPs </h2>
+                        <p>for a cause or a brand with a seamless end to end
+                            event management.</p>
+                    </li>
+                    <li class="card4" id="card4">
+                        <h2>We create unique content strategy </h2>
+                        <p>for brands to grow the brand
+                            organically on digital media.</p>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section class="stats-banner">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h2>10+</h2>
+                <p>Years of Experience</p>
+            </div>
+            <div class="stat-item">
+                <h2>10K+</h2>
+                <p>Satisfied Customers</p>
+            </div>
+            <div class="stat-item">
+                <h2>5+</h2>
+                <p>Awards Won</p>
+            </div>
+            <div class="stat-item">
+                <h2>200+</h2>
+                <p>Completed Projects</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    
+
+    <section class="portfolio-section">
+        <div class="portfolio-text">
+            <h3>PORTFOLIO</h3>
+            <h2>We create beautiful, <br> <span>practical works</span></h2>
+        </div>
+        <a href="#" class="portfolio-button">
+            View All Works <span>↗</span>
+        </a>
+
+        
+    </section>
+<section class="home-services-section">
+
+        <div class="home-service-image">
+            <img src="/Images/SectionImg.png" alt="Video Production">
+        </div>
+    </section>
+
+    <!-- <div class="scroll-container">
+        <div class="carousel">
+            <div class="carousel-item"><img src="https://source.unsplash.com/450x250/?tech" alt="Image 1"></div>
+            <div class="carousel-item"><img src="https://source.unsplash.com/450x250/?nature" alt="Image 2"></div>
+            <div class="carousel-item"><img src="https://source.unsplash.com/450x250/?city" alt="Image 3"></div>
+            <div class="carousel-item"><img src="https://source.unsplash.com/450x250/?abstract" alt="Image 4"></div>
+            <div class="carousel-item"><img src="https://source.unsplash.com/450x250/?design" alt="Image 5"></div>
+        </div>
+    </div> -->
+    
+
+    <div class="imarquee-container">
+        <div class="imarquee-content">
+            Let's Work Together! &nbsp; ✱ Let's Work Together! &nbsp; ✱ Let's Work Together! &nbsp; ✱ Let's Work Together! ✱&nbsp; Let's Work Together! &nbsp; ✱ Let's Work Together! &nbsp; ✱ Let's Work Together! &nbsp; ✱ Let's Work Together! ✱&nbsp;
+        </div>
+    </div>
+
+
+    <div class="team-section">
+        <div class="team-grid">
+            <!-- Large Image with Text Overlapping (First 3 Columns) -->
+            <div class="team-intro">
+                <img src="/Images/teamhead.png">
+                <div class="overlay-text">
+                    <p>OUR TEAM</p>
+                    <h1>Meet the <span>brains</span></h1>
+                    <p class="subtext">Contact us to communicate and ask questions</p>
+                </div>
+            </div>
+    
+            <!-- Team Members with Flip Effect -->
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="/Images/team1director.png" alt="Joeseph Amber">
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Joeseph Amber</h3>
+                        <p>Director</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="/Images/vickeyannaweb.jpg" alt="Monica Sanchez">
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Monica Sanchez</h3>
+                        <p>FX Artist</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="/Images/team1director.png" alt="Phoebe Buffray">
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Phoebe Buffray</h3>
+                        <p>Marketer</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="/Images/teamhead.png" alt="Joey Tribiany">
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Joey Tribiany</h3>
+                        <p>Camera-man</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="/Images/team1director.png" alt="Chandler Russell">
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Chandler Russell</h3>
+                        <p>Editor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="last-banner">
+        <div class="last-banner-content">
+            <h1>Have an idea? <br> <span>Let’s Talk.</span></h1>
+            <p>We create experiences that fuel connections between brands and the people vital to their success.</p>
+            <a href="#" class="btn">Contact Us <span>→</span></a>
+        </div>
+    </section>
+    
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Left Section -->
+            <div class="footer-left">
+                <img src="/Images/LogoVilambaram 1.png" alt="Kaleidoscope Logo" class="logo">
+                
+                <p class="footer-text">
+                    Kaleidoscope - a creative agency specializing in making videos for strategy, marketing, and production.
+                </p>
+                
+                <!-- Social Media Icons -->
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-vimeo-v"></i></a>
+                </div>
+            </div>
+    
+            <!-- Right Section -->
+            <div class="footer-right">
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="#">Home <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">About Us <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">Portfolios <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">Services <span class="arrow">&#8599;</span></a></li>
+                        <li><a href="#">Contact Us <span class="arrow">&#8599;</span></a></li>
+                        
+                    </ul>
+                </div>
+    
+                
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>© Copyright 2023 VilambarmMedia. All Rights Reserved</p>
+        <div class="footer-links-bottom">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </div>
+    
+
+
+    <script>
+        function playVideo() {
+            var video = document.getElementById("hero-video");
+            var playButton = document.querySelector(".play-button");
+            if (video.paused) {
+                video.play();
+                playButton.style.display = "none";
+            } else {
+                video.pause();
+                playButton.style.display = "block";
+            }
+        }
+
+        /* const carousel = document.querySelector(".carousel");
+
+        window.addEventListener("scroll", () => {
+            let scrollPosition = window.scrollY;
+            let maxScroll = document.body.scrollHeight - window.innerHeight;
+            let scrollFraction = scrollPosition / maxScroll;
+            let maxTranslate = carousel.scrollWidth - window.innerWidth;
+            
+            carousel.style.transform = `translateX(-${maxTranslate * scrollFraction}px)`;
+        }); */
+
+        const carousel = document.querySelector('.carousel-container');
+
+        window.addEventListener("scroll", () => {
+            let scrollY = window.scrollY; 
+            let translateX = -scrollY * 0.5; /* Moves left when scrolling down */
+
+            carousel.style.transform = `translateX(${translateX}px)`;
+        });
+    
+
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        
+    </script>
+</body>
+</html>
